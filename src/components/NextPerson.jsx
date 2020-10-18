@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import ReactBootstrap,{Button,Col, Row,Glyphicon} from 'react-bootstrap'
+import ReactBootstrap,{Button,Col, Row} from 'react-bootstrap'
 
 class NextPerson extends React.Component{
 constructor (props){
@@ -28,7 +28,7 @@ render(){
        
         <Col> </Col>
         <Col>
-            <Button variant="primary" type="Button" className="btn btn-block">Next  <span className="glyphicon glyphicon-triangle-right"></span></Button>
+            <Button variant="primary" type="Button" className="btn btn-block">Next</Button>
        </Col> 
        <Col> </Col>
           
