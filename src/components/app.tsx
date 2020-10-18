@@ -1,7 +1,7 @@
 // Import deps
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-
+import NextPerson from "./NextPerson"
 
 // Import styles
 import './../styles/styles.css'
@@ -13,6 +13,7 @@ export const App = () => {
   return (
     <div className="app">
       Content
+      <NextPerson/>
     </div>
   )
 }
