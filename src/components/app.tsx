@@ -13,7 +13,7 @@ export const App = () => {
   return (
     <div className="app">
       Content
-      <NextPerson/>
+      <NextPerson currentNumber="2" currentType="Pay" />
     </div>
   )
 }
