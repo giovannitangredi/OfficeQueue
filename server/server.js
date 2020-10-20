@@ -6,8 +6,8 @@ const cors = require('cors')
 const helmet = require('helmet')
 
 // Import Routes
-const ticketsRouter = require('./routes/service-route')
-const serviceRouter = require('./routes/tickets-route')
+const serviceRouter = require('./routes/service-route')
+const ticketsRouter = require('./routes/tickets-route')
 
 // Set default port for express app
 const PORT = process.env.PORT || 4001
