@@ -27,6 +27,9 @@ export const App = () => {
           <Route path="/officer">
             <NextPerson currentNumber="2" currentType="Pay" />
           </Route>
+          <Route path="/mainScreen">
+            Main screen not yet implemented
+          </Route>
           <Route>
             <Container fluid className='mx-0 p-0' >
               <ServiceSelectionView/>
