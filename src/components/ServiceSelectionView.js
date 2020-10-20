@@ -1,78 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { ListGroup, Container, Row, Col } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios'
 
 function ServiceSelectionView() {
     const [services, setServices] = useState([]);
     const [currentService, setCurrentService] = useState('');
     const [queueLength, setQueueLength] = useState(0);
+    const [ticketIssued, setTicketIssued] = useState(false);
 
     useEffect(()=>{
-        const fakeServices = [
-                    {
-                        id: 'S001',
-                        type: 'pay bills'
-                    }, 
-                    {
-                        id: 'S002',
-                        type: 'collect a parcel'
-                    }, 
-                    {
-                        id: 'S003',
-                        type: 'send a parcel'
-                    }
-                ];
-                setServices(fakeServices);
+        getServices();
     }, []);
+
+    const getServices = () => {
+        axios
+            .get('http://localhost:4001/service/allservice')
+            .then(response => {
+                setServices(response.data);
+            })
+            .catch(error => console.error(`There was an error retrieving the service list: ${error}`))
+    }
 
     const handleServiceSelection = (serviceID) => {
         setCurrentService(serviceID);
-        const fakeInfo = [
+        axios
+            .get('http://localhost:4001/tickets/filterticket',
             {
-                id: 'S001',
-                type: 'pay bills',
-                queueLength: 10,
-                waitingTime: 72
-            }, 
+                params: {
+                    SID: serviceID,
+                    Status: 'A'
+                }
+            })
+            .then(response => {
+                setQueueLength(response.data.length);
+            })
+            .catch(error => console.error(`There was an error retrieving the ticket list: ${error}`))
+    }
+
+    const handleGetTicket = () => {
+        axios
+            .post('http://localhost:4001/tickets/createticket',
             {
-                id: 'S002',
-                type: 'collect a parcel',
-                queueLength: 20,
-                waitingTime: 60
-            }, 
-            {
-                id: 'S003',
-                type: 'send a parcel',
-                queueLength: 5,
-                waitingTime: 25
-            }
-        ];
-    
-        let info = {
-            id: '',
-            type: '',
-            queueLength: -1,
-            waitingTime: -1
-        };
-    
-        switch(serviceID) {
-            case 'S001':
-                info = fakeInfo[0];
-                break;
-            case 'S002':
-                info = fakeInfo[1];
-                break;
-            case 'S003':
-                info = fakeInfo[2];
-                break;
-            default:
-                break;
-    
-        }
-        setQueueLength(info.queueLength);
+                SID: currentService,
+                Status: 'A'
+            })
+            .then(response => {
+                setTicketIssued(true);
+            })
+            .catch(error => console.error(`There was an error creating a new ticket: ${error}`))
     }
 
     return (
+        <>
+        {
+            ticketIssued && <Redirect to="/mainScreen" />
+        }
         <Container>
             <Row>
                 <h4 className='mx-auto mt-3 text-center p-2'>Available services</h4>
@@ -83,8 +67,8 @@ function ServiceSelectionView() {
                     <ListGroup variant="flush">
                         {
                             services.map(s =>
-                                <ListGroup.Item key={s.id} active={currentService === s.id ? true : false} onClick={()=>handleServiceSelection(s.id)} action className='rounded-pill mx-auto mt-3 shadow text-center w-75 p-4'> 
-                                    {s.type} 
+                                <ListGroup.Item key={s.SID} active={currentService === s.SID ? true : false} onClick={()=>handleServiceSelection(s.SID)} action className='rounded-pill mx-auto mt-3 shadow text-center w-75 p-4'> 
+                                    {s.Type} 
                                 </ListGroup.Item>
                             )
                         }
@@ -108,11 +92,12 @@ function ServiceSelectionView() {
                 </Col>
             </Row>
             <Row>
-                <Button disabled={currentService === '' ? true : false} className="my-2 mx-auto">
+                <Button onClick={handleGetTicket} disabled={currentService === '' ? true : false} className="my-2 mx-auto">
                     Get the ticket
                 </Button>
             </Row>
         </Container>
+        </>
     );
 }
 

@@ -7,8 +7,8 @@ exports.ticketsFilter = async (req, res) => {
     .select('*') 
     .from('ticket') 
     .where({
-      'SID': req.body.SID,
-      'Status': req.body.Status
+      'SID': req.query.SID,
+      'Status': req.query.Status
     })
     .then(ticketsfiltered => {
       res.json(ticketsfiltered)
