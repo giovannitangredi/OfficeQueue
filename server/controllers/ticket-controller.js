@@ -1,14 +1,6 @@
 // Import database
 const knex = require('./../db')
 
-/*const Ticket = require('./Ticket');
-
-
-
-const createCar = function (row) {
-    return new Ticket(row.id,row.category, row.brand, row.model,row.quantity,row.userId,row.dataStart,row.dataEnd);
-}*/
-
 // Retrieve filter ticket with type request + status
 exports.ticketsFilter = async (req, res) => {
   knex
@@ -29,7 +21,6 @@ exports.ticketsFilter = async (req, res) => {
 // Insert new ticket
 exports.newTicket = async (req, res) => {
   // Insert new ticket from database
-  console.log("ENTRA????");
   knex('ticket')
     .insert({ // insert new record, a ticket
     'SID': req.body.SID,

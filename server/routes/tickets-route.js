@@ -8,13 +8,13 @@ const ticketsRoutes = require('./../controllers/ticket-controller.js')
 const router = express.Router()
 
 // Add route for POST request to create new ticket
-router.post('/create', ticketsRoutes.newTicket)
+router.post('/createticket', ticketsRoutes.newTicket)
 
 // Add route for POST request to create new ticket
-router.get('/filter', ticketsRoutes.ticketsFilter)
+router.get('/filterticket', ticketsRoutes.ticketsFilter)
 
 // Add route for POST request to create new ticket
-router.post('/update', ticketsRoutes.updateTicket)
+router.post('/updateticket', ticketsRoutes.updateTicket)
 
 
 // Export router

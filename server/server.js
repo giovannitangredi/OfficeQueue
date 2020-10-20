@@ -5,6 +5,10 @@ const compression = require('compression')
 const cors = require('cors')
 const helmet = require('helmet')
 
+// Import Routes
+const ticketsRouter = require('./routes/service-route')
+const serviceRouter = require('./routes/tickets-route')
+
 // Set default port for express app
 const PORT = process.env.PORT || 4001
 
@@ -19,7 +23,8 @@ app.use(compression())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-
+app.use('/tickets', ticketsRouter)
+app.use('/service', serviceRouter)
 
 // Implement 500 error route
 app.use(function (err, req, res, next) {
