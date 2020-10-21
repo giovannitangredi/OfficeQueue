@@ -19,7 +19,6 @@ render(){
         {'\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'}Number of people in queue now</label>
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="P" disabled />
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="-" disabled />
-        <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="-" disabled />
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="0" disabled />
         
         </Row>
@@ -29,13 +28,11 @@ render(){
         <Row>
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="W" disabled />
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="-" disabled />
-        <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="-" disabled />
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="0" disabled />
         </Row> 
 
         <Row>
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="T" disabled />
-        <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="-" disabled />
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="-" disabled />
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="0" disabled />
         </Row>
