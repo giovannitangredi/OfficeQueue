@@ -10,10 +10,16 @@ const router = express.Router()
 // Add route for POST request to create new ticket
 router.post('/createticket', ticketsRoutes.newTicket)
 
-// Add route for POST request to create new ticket
+// Add route for GET request to get the status and service
 router.get('/filterticket', ticketsRoutes.ticketsFilter)
 
-// Add route for POST request to create new ticket
+// Add route for GET request to get the next customer from longest queue
+router.get('/nextperson', ticketsRoutes.nextPerson)
+
+// Add route for GET request to get the longest queue
+router.get('/longestqueue', ticketsRoutes.longestQueue)
+
+// Add route for POST request to update ticket
 router.post('/updateticket', ticketsRoutes.updateTicket)
 
 

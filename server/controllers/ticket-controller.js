@@ -18,6 +18,40 @@ exports.ticketsFilter = async (req, res) => {
     })
 }
 
+// Extract next person from longest queue
+exports.nextPerson = async (req, res) => {
+  knex
+    .select('TID') 
+    .from('ticket') 
+    .whereIn('SID', function() {
+      this.select('SID', knex.raw('COUNT(*) as count')).from('ticket')
+          .whereIn('SID', function() {this.select('SID').from('counter').where({'CID': req.query.CID})})         
+      .andWhere({'Status': 'ok'})    //Status code for pending????
+      .groupBy('SID').orderBy('count', 'desc').limit(1)})
+      .orderBy('TID').limit(1)
+    .then(nextperson => {
+      res.json(nextperson)
+    })
+    .catch(err => {
+      res.json({ message: `There was an error retrieving tickets: ${err}` })
+    })
+}
+
+// Extract number of the longest queues
+exports.longestQueue = async (req, res) => {
+  knex.raw(`SELECT COUNT(*) FROM (SELECT SID FROM TICKET 
+                                  WHERE SID IN (SELECT SID FROM counter where CID = COUNTERID) 
+                                  GROUP BY SID HAVING COUNT(*) = (SELECT COUNT(*) 
+                                        FROM ticketWHERE SID IN (SELECT SID FROM counter where CID = COUNTERID) 
+                                        GROUP BY SID ORDER BY COUNT(*) DESC LIMIT 1))`)
+ .then(nextperson => {
+      res.json(nextperson)
+    })
+    .catch(err => {
+      res.json({ message: `There was an error retrieving tickets: ${err}` })
+    })
+}
+
 // Insert new ticket
 exports.newTicket = async (req, res) => {
   // Insert new ticket from database
