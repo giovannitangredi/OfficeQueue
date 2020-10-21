@@ -20,31 +20,29 @@ exports.ticketsFilter = async (req, res) => {
 
 // Extract next person from longest queue
 exports.nextPerson = async (req, res) => {
-  knex
-    .select('TID') 
-    .from('ticket') 
-    .whereIn('SID', function() {
-      this.select('SID', knex.raw('COUNT(*) as count')).from('ticket')
-          .whereIn('SID', function() {this.select('SID').from('counter').where({'CID': req.query.CID})})         
-      .andWhere({'Status': 'ok'})    //Status code for pending????
-      .groupBy('SID').orderBy('count', 'desc').limit(1)})
-      .orderBy('TID').limit(1)
+  knex.raw(`SELECT TID 
+  FROM ticket 
+  WHERE SID = (
+              SELECT t.SID 
+              FROM ticket t, service s
+              WHERE t.SID IN (SELECT SID FROM counter where CID = ?)
+              AND Status = 'A' AND t.SID = s.SID
+              GROUP BY t.SID
+              HAVING COUNT(*) = (SELECT COUNT(*)
+                                  FROM ticket
+                                  WHERE SID IN (SELECT SID FROM counter where CID = ?)
+                                  AND Status = 'A'
+                                  GROUP BY SID 
+                                  ORDER BY COUNT(*) 
+                                  DESC LIMIT 1)
+              ORDER BY Time
+              LIMIT 1
+              )
+  AND Status = 'A'
+  ORDER BY TID
+  LIMIT 1;`, [req.query.CID,req.query.CID])
+    
     .then(nextperson => {
-      res.json(nextperson)
-    })
-    .catch(err => {
-      res.json({ message: `There was an error retrieving tickets: ${err}` })
-    })
-}
-
-// Extract number of the longest queues
-exports.longestQueue = async (req, res) => {
-  knex.raw(`SELECT COUNT(*) FROM (SELECT SID FROM TICKET 
-                                  WHERE SID IN (SELECT SID FROM counter where CID = COUNTERID) 
-                                  GROUP BY SID HAVING COUNT(*) = (SELECT COUNT(*) 
-                                        FROM ticketWHERE SID IN (SELECT SID FROM counter where CID = COUNTERID) 
-                                        GROUP BY SID ORDER BY COUNT(*) DESC LIMIT 1))`)
- .then(nextperson => {
       res.json(nextperson)
     })
     .catch(err => {
@@ -79,11 +77,11 @@ exports.updateTicket = async (req, res) => {
   .where('TID',req.body.TID)
     .update({ // insert new record, a ticket
     'Status': req.body.Status,
-    //'CID': req.body.CID,
+    'CID': req.body.CID,
   })
   .then(() => {
     // Send a success message in response
-    res.json({ message: `Ticket not updated.` })
+    res.json({ message: `Ticket updated.` })
   })
   .catch(err => {
     // Send a error message in response

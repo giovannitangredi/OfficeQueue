@@ -25,7 +25,7 @@ export const App = () => {
       <Row className='col-12 m-0 p-0' style={{ height: '90vh' }}>
         <Switch>
           <Route path="/officer">
-            <NextPerson currentNumber="2" currentType="Pay" />
+            <NextPerson currentNumber="2" currentType="Money Transfer " currentSID="2" currentCID="1" />
           </Route>
           <Route path="/mainScreen">
             Main screen not yet implemented

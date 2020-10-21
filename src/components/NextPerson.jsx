@@ -2,11 +2,12 @@
 import React from 'react';
 
 import ReactBootstrap,{Button,Col, Row} from 'react-bootstrap'
+import axios from 'axios'
 
 class NextPerson extends React.Component{
 constructor (props){
 super(props);
-let {currentNumber,currentType,next_handler}=props;
+let {currentNumber,currentType,currentSID,currentCID,next_handler}=props;
 }
 
 
@@ -14,6 +15,17 @@ handleNext=(evt)=>{
     evt.preventDefault();
     if(this.props.next_handler!=undefined && this.props.next_handler)
     this.props.next_handler();
+    axios   //call new customer
+            .get('http://localhost:4001/tickets/nextperson',
+            {
+                params: {
+                    CID: this.props.currentSID,
+                }
+            })
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(error => console.error(`There was an error retrieving the ticket list: ${error}`))
 }
 
 render(){
