@@ -12,30 +12,33 @@ class NextPerson extends React.Component {
       currentCID: 1,
       currentTID: 0,
     };
-    this.handleNext();
+    this.getCurrentTicketID();
   }
 
+  getCurrentTicketID=()=>{
 
+    axios //call new customer
+    .get("http://localhost:4001/tickets/nextperson", {
+      params: {
+        CID: this.state.currentSID,
+      },
+    })
+    .then((response) => {
+      let result = response.data.reduce((acc, er) =>   er.TID, 0);
+      this.setState({ currentTID: result });
+      console.log("TID="+this.state.currentTID+" SID="+this.state.currentSID);
+     
+    })
+    .catch((error) =>
+      console.error(`There was an error retrieving the ticket list: ${error}`)
+    );
+  }
 
   
   handleNext = (evt) => {
       if(evt)
     evt.preventDefault();
-    axios //call new customer
-      .get("http://localhost:4001/tickets/nextperson", {
-        params: {
-          CID: this.state.currentSID,
-        },
-      })
-      .then((response) => {
-        let result = response.data.reduce((acc, er) =>   er.TID, 0);
-        this.setState({ currentTID: result });
-        console.log("TID="+this.state.currentTID+" SID="+this.state.currentSID);
-       
-      })
-      .catch((error) =>
-        console.error(`There was an error retrieving the ticket list: ${error}`)
-      );
+this.getCurrentTicketID();
       axios   //update ticket status and counter
             .post('http://localhost:4001/tickets/updateticket',
             {
