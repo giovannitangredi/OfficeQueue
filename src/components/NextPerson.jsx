@@ -16,17 +16,17 @@ class NextPerson extends React.Component {
   }
 
   getCurrentTicketID=()=>{
-
+console.log("currentCID="+this.state.currentCID);
     axios //call new customer
     .get("http://localhost:4001/tickets/nextperson", {
       params: {
-        CID: this.state.currentSID,
+        CID: this.state.currentCID,
       },
     })
     .then((response) => {
       let result = response.data.reduce((acc, er) =>   er.TID, 0);
       this.setState({ currentTID: result });
-      console.log("TID="+this.state.currentTID+" SID="+this.state.currentSID);
+      console.log("TID="+this.state.currentTID+" SID="+this.state.currentSID+" CID="+this.state.currentCID);
      
     })
     .catch((error) =>
@@ -44,14 +44,14 @@ this.getCurrentTicketID();
             {
                     TID: this.state.currentTID,
                     Status: 'C',
-                    CID:this.state.currentSID, 
-                
-            })
-            .then(response => {
-                
+                    CID:this.state.currentCID, 
+                    
+                })
+                .then(response => {
+                    console.log("After TID="+this.state.currentTID+" SID="+this.state.currentSID+" CID="+this.state.currentCID);
+                    
             })
             .catch(error => console.error(`There was an error retrieving the ticket list: ${error}`));
-
 
     //     this.setState({ currentNumber: this.state.currentSID , currentType:"Payment"});
   };
