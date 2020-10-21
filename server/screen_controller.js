@@ -9,9 +9,9 @@ const createRow = (type,n_people) =>{
 exports.getServingTickets= async (req,res)=>{
     knex.select('*')
     .from('ticket').join('service', function() {
-        this.on('ticket.CID','=','counter.CID')
-    }).join('counter', function() {
         this.on('ticket.SID','=','service.SID')
+    }).join('counter', function() {
+        this.on('ticket.CID','=','counter.CID')
     }).where({Status : "S"}).then(rows=>{
        let resJson= rows.map(row=> createTicket(row.TID,row.Type, row.Time,row.CID,row.Status));
       res.json(resJson);
