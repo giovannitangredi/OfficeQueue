@@ -1,10 +1,10 @@
 const express = require('express')
 
-const systemRoutes = require('./screen_controller.js')
+const sceenRoutes = require('./screen_controller.js')
 
 // Create router
 const router = express.Router()
 
-router.get('/servingTickets',systemRoutes.getServingTickets)
-
+router.get('/servingTickets',sceenRoutes.getServingTickets)
+router.get('/NumberPeoples',sceenRoutes.getNumberPeople)
 module.exports = router;

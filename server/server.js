@@ -23,7 +23,7 @@ app.use(bodyParser.json())
 // Import routes
 const screenRouter = require('./screen_router.js')
 
-app.use('/system', screenRouter)
+app.use('/screen', screenRouter)
 
 // Implement 500 error route
 app.use(function (err, req, res, next) {
