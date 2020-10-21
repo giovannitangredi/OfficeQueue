@@ -1,14 +1,14 @@
 // Import express
-const express = require('express')
+const express = require("express");
 
 // Import books-controller
-const serviceRoutes = require('./../controllers/service-controller.js')
+const serviceRoutes = require("./../controllers/service-controller.js");
 
 // Create router
-const router = express.Router()
+const router = express.Router();
 
 // Add route for POST request to create new ticket
-router.get('/allservice', serviceRoutes.getService)
+router.get("/allservice", serviceRoutes.getService);
 
 // Export router
-module.exports = router
+module.exports = router;

@@ -1,6 +1,5 @@
 # Office Queue
 
-
 ## Install
 
 ```sh

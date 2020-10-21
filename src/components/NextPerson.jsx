@@ -15,52 +15,44 @@ class NextPerson extends React.Component {
     this.getCurrentTicketID();
   }
 
-  getCurrentTicketID=()=>{
-
+  getCurrentTicketID = () => {
     axios //call new customer
-    .get("http://localhost:4001/tickets/nextperson", {
-      params: {
-        CID: this.state.currentSID,
-      },
-    })
-    .then((response) => {
-      let result = response.data.reduce((acc, er) =>   er.TID, 0);
-      this.setState({ currentTID: result });
-      console.log("TID="+this.state.currentTID+" SID="+this.state.currentSID);
-     
-    })
-    .catch((error) =>
-      console.error(`There was an error retrieving the ticket list: ${error}`)
-    );
-  }
+      .get("http://localhost:4001/tickets/nextperson", {
+        params: {
+          CID: this.state.currentSID,
+        },
+      })
+      .then((response) => {
+        let result = response.data.reduce((acc, er) => er.TID, 0);
+        this.setState({ currentTID: result });
+        console.log(
+          "TID=" + this.state.currentTID + " SID=" + this.state.currentSID
+        );
+      })
+      .catch((error) =>
+        console.error(`There was an error retrieving the ticket list: ${error}`)
+      );
+  };
 
-  
   handleNext = (evt) => {
-      if(evt)
-    evt.preventDefault();
-this.getCurrentTicketID();
-      axios   //update ticket status and counter
-            .post('http://localhost:4001/tickets/updateticket',
-            {
-                    TID: this.state.currentTID,
-                    Status: 'C',
-                    CID:this.state.currentSID, 
-                
-            })
-            .then(response => {
-                
-            })
-            .catch(error => console.error(`There was an error retrieving the ticket list: ${error}`));
-
+    if (evt) evt.preventDefault();
+    this.getCurrentTicketID();
+    axios //update ticket status and counter
+      .post("http://localhost:4001/tickets/updateticket", {
+        TID: this.state.currentTID,
+        Status: "C",
+        CID: this.state.currentSID,
+      })
+      .then((response) => {})
+      .catch((error) =>
+        console.error(`There was an error retrieving the ticket list: ${error}`)
+      );
 
     //     this.setState({ currentNumber: this.state.currentSID , currentType:"Payment"});
   };
-  onChangeText = (name,value) => {
-   
-   console.log(value);
+  onChangeText = (name, value) => {
+    console.log(value);
     this.setState({ currentCID: value });
-   
-
   };
 
   render() {
@@ -74,8 +66,9 @@ this.getCurrentTicketID();
               type="number"
               className="alert alert-info digit7style col-lg-12"
               value={this.state.currentCID}
-              onChange={(ev) => this.onChangeText(ev.target.name, ev.target.value)}
-             
+              onChange={(ev) =>
+                this.onChangeText(ev.target.name, ev.target.value)
+              }
             />
           </Row>
           <Row>
