@@ -7,8 +7,13 @@ const serviceRoutes = require('./../controllers/service-controller.js')
 // Create router
 const router = express.Router()
 
-// Add route for POST request to create new ticket
+// Add route for GET request to retrieve all services
 router.get('/allservice', serviceRoutes.getService)
+
+// Add route for GET request to retrive a service from the ticket
+router.get('/serviceticket', serviceRoutes.getServiceTicket)
+
+
 
 // Export router
 module.exports = router

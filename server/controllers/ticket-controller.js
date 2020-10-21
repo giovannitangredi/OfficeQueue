@@ -18,6 +18,7 @@ exports.ticketsFilter = async (req, res) => {
     })
 }
 
+
 // Extract next person from longest queue
 exports.nextPerson = async (req, res) => {
   knex.raw(`SELECT TID 
@@ -74,7 +75,7 @@ exports.newTicket = async (req, res) => {
 exports.updateTicket = async (req, res) => {
   // Update ticket in database
   knex('ticket')
-  .where('TID',req.body.TID)
+  .where({TID: req.body.TID})
     .update({ // insert new record, a ticket
     'Status': req.body.Status,
     'CID': req.body.CID,

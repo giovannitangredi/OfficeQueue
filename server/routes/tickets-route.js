@@ -15,9 +15,6 @@ router.get('/filterticket', ticketsRoutes.ticketsFilter)
 
 // Add route for GET request to get the next customer from longest queue
 router.get('/nextperson', ticketsRoutes.nextPerson)
-/*
-// Add route for GET request to get the longest queue
-router.get('/longestqueue', ticketsRoutes.longestQueue)*/
 
 // Add route for POST request to update ticket
 router.post('/updateticket', ticketsRoutes.updateTicket)

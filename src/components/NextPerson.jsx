@@ -1,5 +1,4 @@
 import React from "react";
-
 import ReactBootstrap, { Button, Col, Row } from "react-bootstrap";
 import axios from "axios";
 
@@ -7,16 +6,16 @@ class NextPerson extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentType: "Shipping",
+      currentType: "",
       currentSID: 1,
       currentCID: 1,
-      currentTID: 0,
+      currentTID: "",
     };
-    this.getCurrentTicketID();
+    //this.getCurrentTicketID();  removed only because at first there's no call yet
   }
 
   getCurrentTicketID=()=>{
-console.log("currentCID="+this.state.currentCID);
+//console.log("currentCID="+this.state.currentCID);
     axios //call new customer
     .get("http://localhost:4001/tickets/nextperson", {
       params: {
@@ -26,7 +25,35 @@ console.log("currentCID="+this.state.currentCID);
     .then((response) => {
       let result = response.data.reduce((acc, er) =>   er.TID, 0);
       this.setState({ currentTID: result });
-      console.log("TID="+this.state.currentTID+" SID="+this.state.currentSID+" CID="+this.state.currentCID);
+      
+      axios //modify the type of service showed
+            .get('http://localhost:4001/service/serviceticket', 
+            {
+              params: {
+                  TID: result,
+              }
+          }
+            )
+            .then(response => {
+              let stype = response.data.reduce((acc, er) =>   er.Type, 0);
+              this.setState({ currentType: stype });
+            })
+            .catch(error => console.error(`There was an error retrieving the service list: ${error}`))
+     
+       axios   //update ticket status and counter
+      .post('http://localhost:4001/tickets/updateticket',
+      {
+          TID: result,
+          Status: 'C',
+          CID:this.state.currentCID, 
+          
+      })
+      .then(response => {
+          //console.log("After TID="+this.state.currentTID+" SID="+this.state.currentSID+" CID="+this.state.currentCID);
+          
+  })
+  .catch(error => console.error(`There was an error retrieving the ticket list: ${error}`));
+      //console.log("TID="+this.state.currentTID+" SID="+this.state.currentSID+" CID="+this.state.currentCID);
      
     })
     .catch((error) =>
@@ -34,30 +61,15 @@ console.log("currentCID="+this.state.currentCID);
     );
   }
 
-  
+
   handleNext = (evt) => {
       if(evt)
     evt.preventDefault();
-this.getCurrentTicketID();
-      axios   //update ticket status and counter
-            .post('http://localhost:4001/tickets/updateticket',
-            {
-                    TID: this.state.currentTID,
-                    Status: 'C',
-                    CID:this.state.currentCID, 
-                    
-                })
-                .then(response => {
-                    console.log("After TID="+this.state.currentTID+" SID="+this.state.currentSID+" CID="+this.state.currentCID);
-                    
-            })
-            .catch(error => console.error(`There was an error retrieving the ticket list: ${error}`));
-
+  this.getCurrentTicketID()
+  
     //     this.setState({ currentNumber: this.state.currentSID , currentType:"Payment"});
   };
   onChangeText = (name,value) => {
-   
-   console.log(value);
     this.setState({ currentCID: value });
    
 
