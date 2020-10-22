@@ -25,13 +25,13 @@ render(){
       
        
         <Row>
-        <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="W" disabled />
+        <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="S" disabled />
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="-" disabled />
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="0" disabled />
         </Row> 
 
         <Row>
-        <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="T" disabled />
+        <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="M" disabled />
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="-" disabled />
         <input name="digitshow" type="text" className="alert alert-info digit7style col-lg-3" value="0" disabled />
         </Row>
