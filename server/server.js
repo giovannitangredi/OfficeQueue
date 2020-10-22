@@ -9,6 +9,7 @@ const helmet = require('helmet')
 const serviceRouter = require('./routes/service-route')
 const ticketsRouter = require('./routes/tickets-route')
 
+
 // Set default port for express app
 const PORT = process.env.PORT || 4001
 
@@ -22,9 +23,12 @@ app.use(helmet())
 app.use(compression())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+// Import routes
+const screenRouter = require('./screen_router.js')
 
 app.use('/tickets', ticketsRouter)
 app.use('/service', serviceRouter)
+app.use('/screen', screenRouter)
 
 // Implement 500 error route
 app.use(function (err, req, res, next) {
@@ -36,7 +40,6 @@ app.use(function (err, req, res, next) {
 app.use(function (req, res, next) {
   res.status(404).send('Sorry we could not find that.')
 })
-
 // Start express app
 app.listen(PORT, function() {
   console.log(`Server is running on: ${PORT}`)
