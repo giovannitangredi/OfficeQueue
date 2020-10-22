@@ -1,5 +1,5 @@
-const knex = require("./db");
-const Ticket = require("./Ticket");
+const knex = require("../db");
+const Ticket = require("../Ticket");
 const createTicket = (TID, type, waitingTime, CID, status, SID) => {
   return new Ticket(TID, type, waitingTime, CID, status, SID);
 };

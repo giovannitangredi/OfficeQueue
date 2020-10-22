@@ -23,7 +23,7 @@ app.use(compression());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Import routes
-const screenRouter = require("./screen_router.js");
+const screenRouter = require("./routes/screen_router.js");
 
 app.use("/tickets", ticketsRouter);
 app.use("/service", serviceRouter);

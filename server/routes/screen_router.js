@@ -1,6 +1,6 @@
 const express = require("express");
 
-const sceenRoutes = require("./screen_controller.js");
+const sceenRoutes = require("../controllers/screen_controller.js");
 
 // Create router
 const router = express.Router();
