@@ -1,7 +1,6 @@
 // Import deps
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import NextPerson from "./NextPerson"
 import ScreenShow from "./ScreenShow"
 // Import styles
 import './../styles/styles.css'
