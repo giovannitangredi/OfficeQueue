@@ -18,7 +18,7 @@ import React from 'react'
     </td>
 
     <td className="table-item">
-      {props.np[props.ticket.type]}
+      {props.np[props.ticket.type] ? props.np[props.ticket.type] : 0 }
     </td>
 
   </tr>

@@ -44,7 +44,7 @@ class NextPerson extends React.Component {
       .post('http://localhost:4001/tickets/updateticket',
       {
           TID: result,
-          Status: 'C',
+          Status: 'S',
           CID:this.state.currentCID, 
           
       })
@@ -65,6 +65,20 @@ class NextPerson extends React.Component {
   handleNext = (evt) => {
       if(evt)
     evt.preventDefault();
+    axios   //update ticket status and counter
+      .post('http://localhost:4001/tickets/updateticket',
+      {
+          TID: this.state.currentTID,
+          Status: 'C',
+          CID:this.state.currentCID, 
+          
+      })
+      .then(response => {
+          //console.log("After TID="+this.state.currentTID+" SID="+this.state.currentSID+" CID="+this.state.currentCID);
+          
+  })
+  .catch(error => console.error(`There was an error retrieving the ticket list: ${error}`));
+    
   this.getCurrentTicketID()
   
     //     this.setState({ currentNumber: this.state.currentSID , currentType:"Payment"});
