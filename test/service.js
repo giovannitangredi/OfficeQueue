@@ -21,3 +21,17 @@ describe("GET /service/allservice", () => {
     await knex("service").del();
   });
 });
+
+describe("GET /service/serviceticket", () => {
+  it("should return 'related Service.' with status 200", async () => {
+  
+    res = await chai
+      .request(app)
+      .get("/service/serviceticket")
+      .query({ SID: 1 });
+
+    expect(res.status).to.equal(200);
+    expect(res.body.length).to.equal(1);
+  });
+
+});
