@@ -55,7 +55,7 @@ describe("POST /tickets/updateticket", () => {
     let res = await chai
       .request(app)
       .post("/tickets/updateticket")
-      .send({ TID: 1, CID: 1, Status: "C" });
+      .send({ TID: 1, CID: 1, Status: "S" });
 
     expect(res.status).to.equal(200);
     expect(res.body.message).to.equal("Ticket updated.");
@@ -63,7 +63,7 @@ describe("POST /tickets/updateticket", () => {
     res = await chai
       .request(app)
       .post("/tickets/updateticket")
-      .send({ TID: 2, CID: 3, Status: "C" });
+      .send({ TID: 2, CID: 3, Status: "S" });
 
     expect(res.status).to.equal(200);
     expect(res.body.message).to.equal("Ticket updated.");
@@ -71,7 +71,7 @@ describe("POST /tickets/updateticket", () => {
     res = await chai
       .request(app)
       .post("/tickets/updateticket")
-      .send({ TID: 6, CID: 3, Status: "C" });
+      .send({ TID: 6, CID: 3, Status: "S" });
 
     expect(res.status).to.equal(200);
     expect(res.body.message).to.equal("Ticket updated.");
@@ -81,7 +81,7 @@ describe("POST /tickets/updateticket", () => {
     res = await chai
       .request(app)
       .get("/tickets/filterticket")
-      .query({ SID: 1, Status: "C" });
+      .query({ SID: 1, Status: "S" });
 
     expect(res.status).to.equal(200);
     expect(res.body.length).to.equal(2);
@@ -102,7 +102,7 @@ describe("GET /tickets/nextperson", () => {
     await knex("ticket").insert({ SID: 1, Status: "A" });
     await knex("ticket").insert({ SID: 2, Status: "A" });
     await knex("ticket").insert({ SID: 2, Status: "A" });
-    await knex("ticket").insert({ SID: 2, Status: "C" });
+    await knex("ticket").insert({ SID: 2, Status: "S" });
     await knex("service").insert({ Type: "Shipping", Time: "10" });
     await knex("service").insert({ Type: "Money Transfer ", Time: "5" });
   });
@@ -119,7 +119,7 @@ describe("GET /tickets/nextperson", () => {
     res = await chai
       .request(app)
       .post("/tickets/updateticket")
-      .send({ TID: 1, CID: 1, Status: "C" });
+      .send({ TID: 1, CID: 1, Status: "S" });
 
     res = await chai.request(app).get("/tickets/nextperson").query({ CID: 1 });
 
@@ -130,7 +130,7 @@ describe("GET /tickets/nextperson", () => {
     res = await chai
       .request(app)
       .post("/tickets/updateticket")
-      .send({ TID: 2, CID: 1, Status: "C" });
+      .send({ TID: 2, CID: 1, Status: "S" });
 
     res = await chai.request(app).get("/tickets/nextperson").query({ CID: 1 });
 
@@ -148,12 +148,12 @@ describe("GET /tickets/filterticket", () => {
   beforeEach(async () => {
     await knex("ticket").del();
     await knex("ticket").insert({ SID: 1, Status: "A" });
-    await knex("ticket").insert({ SID: 1, Status: "C" });
-    await knex("ticket").insert({ SID: 1, Status: "C" });
-    await knex("ticket").insert({ SID: 1, Status: "C" });
+    await knex("ticket").insert({ SID: 1, Status: "S" });
+    await knex("ticket").insert({ SID: 1, Status: "S" });
+    await knex("ticket").insert({ SID: 1, Status: "S" });
     await knex("ticket").insert({ SID: 2, Status: "A" });
     await knex("ticket").insert({ SID: 2, Status: "A" });
-    await knex("ticket").insert({ SID: 2, Status: "C" });
+    await knex("ticket").insert({ SID: 2, Status: "S" });
   });
   it("should return the right number of filtered tickets", async () => {
     let res = await chai
@@ -166,7 +166,7 @@ describe("GET /tickets/filterticket", () => {
     res = await chai
       .request(app)
       .get("/tickets/filterticket")
-      .query({ SID: 1, Status: "C" });
+      .query({ SID: 1, Status: "S" });
 
     expect(res.status).to.equal(200);
     expect(res.body.length).to.equal(3);
@@ -180,7 +180,7 @@ describe("GET /tickets/filterticket", () => {
     res = await chai
       .request(app)
       .get("/tickets/filterticket")
-      .query({ SID: 2, Status: "C" });
+      .query({ SID: 2, Status: "S" });
 
     expect(res.status).to.equal(200);
     expect(res.body.length).to.equal(1);
