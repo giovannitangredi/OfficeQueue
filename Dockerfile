@@ -1,10 +1,16 @@
-FROM ubuntu:18.04
-RUN apt-get update
-RUN apt install -y nodejs
-RUN apt install -y npm 
-RUN apt install -y yarn
+FROM node:12
+WORKDIR /opt/app/
+ENV YARN_VERSION 1.22.5
+
+RUN curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
+    && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
+    && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
+    && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
+    && rm yarn-v$YARN_VERSION.tar.gz
 COPY package*.json ./
-CMD ['yarn','install']
-# Bundle app source
+COPY package.json yarn.lock ./
 COPY . .
-CMD ['yarn','start']
+RUN yarn install
+EXPOSE 3000
+EXPOSE 4001
+CMD yarn start
