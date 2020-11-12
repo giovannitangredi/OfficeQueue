@@ -4,7 +4,7 @@ RUN apt install -y nodejs
 RUN apt install -y npm 
 RUN apt install -y yarn
 COPY package*.json ./
-RUN yarn install 
+RUN yarn  
 # Bundle app source
 COPY . .
 RUN yarn run start
