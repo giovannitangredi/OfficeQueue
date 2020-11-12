@@ -7,4 +7,4 @@ COPY package*.json ./
 CMD ['yarn','install']
 # Bundle app source
 COPY . .
-RUN yarn run start
+CMD ['yarn','start']
